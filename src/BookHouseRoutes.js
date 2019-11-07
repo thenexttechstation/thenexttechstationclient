@@ -17,6 +17,7 @@ import BookHouseError from "./bookhousecore/BookHouseError";
 import BookShop from "./bookhousecore/BookShop";
 import ProductDetails from "./bookhousecore/ProductDetails";
 import BookHouseCart from "./bookhousecore/BookHouseCart";
+import Orders from "./bookhouseadmin/BookHouseOrder";
 
 const Routes = () => {
   return (
@@ -47,6 +48,8 @@ const Routes = () => {
         />
         <AdminRoute path="/category/create" exact component={CreateCategory} />
         <AdminRoute path="/product/create" exact component={CreateProduct} />
+        <AdminRoute path="/admin/orders" exact component={Orders} />
+
         <Route
           path="/product/:bookhouseproductId"
           exact

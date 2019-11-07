@@ -45,3 +45,17 @@ export const getcategories = () => {
       console.log(error);
     });
 };
+
+export const listOrders = (bookhouseuserId, token) => {
+  return fetch(`${BOOKHOUSEAPI}/order/list/${bookhouseuserId}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`
+    }
+  })
+    .then(response => {
+      return response.json();
+    })
+    .catch(err => console.log(err));
+};

@@ -138,9 +138,7 @@ const Checkout = ({ bookhouseproducts }) => {
               bookhouseproducts: bookhouseproducts,
               transaction_id: response.transaction.id,
               amount: response.transaction.amount,
-              address: deliveryAddress,
-              bookhouseusername: bookhouseuser.username,
-              bookhouseuseremail: bookhouseuser.email
+              address: deliveryAddress
             };
 
             createBookhouseOrder(bookhouseuserId, token, createOrderData)
