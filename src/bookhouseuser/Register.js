@@ -52,12 +52,12 @@ const Register = () => {
           <ul className="login-nav">
             <li className="login-nav__item active">
               <a href="#">
-                <h2>Register</h2>
+                <h4>Register</h4>
               </a>
             </li>
             <li className="login-nav__item">
               <a href="/sociallogin">
-                <h2>Social Sign In</h2>
+                <h4>Social Sign In</h4>
               </a>
             </li>
           </ul>
@@ -92,7 +92,7 @@ const Register = () => {
           </button>
         </form>
         <a href="/login" className="login__forgot">
-          Already an User!
+          <h4>Already an User!</h4>
         </a>
       </div>
     </div>

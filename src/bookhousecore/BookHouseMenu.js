@@ -1,5 +1,8 @@
 import React, { Fragment } from "react";
 import { Link, withRouter } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+
 import {
   logout,
   isAuthenticated,
@@ -8,6 +11,7 @@ import {
 } from "../bookhouseapi/Bookhouseuserapi";
 import { itemTotal } from "./Cart";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+
 const isActive = (history, path) => {
   if (history.location.pathname === path) {
     return { color: "#760B0B" };
@@ -157,6 +161,21 @@ const BookHouseMenu = ({ history }) => (
           </li>
         </Fragment>
       )}
+      <div class="d-flex p-3 bg-dark text-white">
+        <div class="p-2 bg-info">
+          <h4>Book House-The NextTechStation Innovation</h4>
+        </div>
+      </div>
+
+      <li className="nav-item">
+        <Link
+          className="nav-link"
+          style={isActive(history, "/search")}
+          to="/search"
+        >
+          <h3>Search Book</h3>
+        </Link>
+      </li>
     </ul>
   </div>
 );

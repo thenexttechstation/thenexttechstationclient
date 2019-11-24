@@ -7,7 +7,7 @@ const ShowImage = ({ item, url }) => (
       src={`${BOOKHOUSEAPI}/${url}/image/${item._id}`}
       alt={item.name}
       className="card-img-top"
-      style={{ maxHeight: "20%", maxWidth: "40%" }}
+      style={{ maxHeight: "10%", maxWidth: "90%" }}
     />
   </div>
 );

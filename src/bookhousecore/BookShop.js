@@ -128,7 +128,7 @@ const BookShop = () => {
       <Carousal></Carousal>
       <div id="shoppage" className="row">
         <div className="col-xs-6 col-md-2">
-          <h4>Filter by categories</h4>
+          <h3>Filter by categories</h3>
           <ul>
             <CategoryCheckbox
               bookhousecategories={bookhousecategories}
@@ -139,7 +139,7 @@ const BookShop = () => {
           </ul>
 
           <br></br>
-          <h4>Filter by price range</h4>
+          <h3>Filter by price range</h3>
           <div id="pricebox">
             <PriceRadioBox
               prices={prices}
@@ -150,7 +150,7 @@ const BookShop = () => {
         <div id="gap" className="col-xs-6 col-md-2"></div>
 
         <div className="col-xs-6 col-md-8">
-          <h2>Products</h2>
+          <h3>Products</h3>
           <div>
             {filteredResults.map((bookhouseproduct, i) => (
               <div key={i}>

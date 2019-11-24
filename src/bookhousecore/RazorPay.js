@@ -58,8 +58,8 @@ class RazorPay extends Component {
         alert(JSON.stringify(response));
       },
       prefill: {
-        name: this.bookhouseuser.username,
-        email: this.bookhouseuser.email
+        name: "test",
+        email: "test"
       },
       notes: {
         address: this.address

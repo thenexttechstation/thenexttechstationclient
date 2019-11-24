@@ -1,5 +1,7 @@
 import React from "react";
 import BookHouseMenu from "./BookHouseMenu";
+import BookHouseBottomMenu from "./BookHouseBottomMenu";
+
 import "../styles.css";
 
 const BookHouseLayout = ({
@@ -16,6 +18,7 @@ const BookHouseLayout = ({
     </div>
 
     <div className={className}>{children}</div>
+    <BookHouseBottomMenu />
   </div>
 );
 

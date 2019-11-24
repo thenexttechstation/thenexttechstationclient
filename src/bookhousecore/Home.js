@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import BookHouseLayout from "../bookhousecore/BookhouseLayout";
 import { getProducts } from "./BookHouseAPICore";
-import BookCard from "./BookCard";
+import BookCardHome from "./BookCardHome";
 import Carousal from "../bookhousecore/Carousal";
 import SearchBookHouse from "./SearchBookHouse";
 
@@ -37,17 +37,16 @@ const Home = () => {
 
   return (
     <BookHouseLayout
-      pagetitle="Home Page"
-      pagedescription="Book House"
+      pagetitle="Book House"
+      pagedescription="The Next Tech Station Innovation"
       className="container-fluid"
     >
-      <SearchBookHouse></SearchBookHouse>
       <Carousal></Carousal>
       <h2 className="mb-4">New Arrivals</h2>
       <div className="row">
         {productsByArrival.map((bookhouseproduct, i) => (
           <div key={i} className="col-4 mb-3">
-            <BookCard key={i} bookhouseproduct={bookhouseproduct} />
+            <BookCardHome key={i} bookhouseproduct={bookhouseproduct} />
           </div>
         ))}
       </div>
@@ -56,7 +55,7 @@ const Home = () => {
       <div className="row">
         {productsBySell.map((bookhouseproduct, i) => (
           <div key={i} className="col-4 mb-3">
-            <BookCard bookhouseproduct={bookhouseproduct} />
+            <BookCardHome bookhouseproduct={bookhouseproduct} />
           </div>
         ))}
       </div>

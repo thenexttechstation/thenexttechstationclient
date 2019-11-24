@@ -1,13 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import BookHouseLayout from "../bookhousecore/BookhouseLayout";
 import { isAuthenticated } from "../bookhouseapi/Bookhouseuserapi";
 import { Link } from "react-router-dom";
+import { getBookPurchaseHistory } from "./Userapi";
+import moment from "moment";
 
 const BookhouseUserDashboard = () => {
+  const [history, setHistory] = useState([]);
+  const token = isAuthenticated().signedtoken;
   const {
     bookhouseuser: { _id, username, email, userrole }
   } = isAuthenticated();
 
+  const init = (bookhouseuserid, token) => {
+    console.log("inside init" + bookhouseuserid);
+    console.log("inside token" + token);
+
+    getBookPurchaseHistory(bookhouseuserid, token).then(data => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setHistory(data);
+      }
+    });
+  };
+
+  useEffect(() => {
+    init(_id, token);
+  }, []);
   const bookhouseuserlinks = () => {
     return (
       <div className="card">
@@ -19,7 +39,7 @@ const BookhouseUserDashboard = () => {
             </Link>
           </li>
           <li className="list-group-item">
-            <Link className="nav-link" to="/bookhouseprofile/update">
+            <Link className="nav-link" to={`/profile/${_id}`}>
               Update Profile
             </Link>
           </li>
@@ -57,6 +77,34 @@ const BookhouseUserDashboard = () => {
       </div>
     );
   };
+  const purchaseBookHistory = history => {
+    return (
+      <div className="card mb-5">
+        <h3 className="card-header">Purchase history</h3>
+        <ul className="list-group">
+          <li className="list-group-item">
+            {history.map((h, i) => {
+              return (
+                <div>
+                  <hr />
+                  {h.bookhouseproducts.map((p, i) => {
+                    return (
+                      <div key={i}>
+                        {JSON.stringify(p)}
+                        <h6>Product name: {p.bookname}</h6>
+                        <h6>Product price: ${p.price}</h6>
+                        <h6>Purchased date: {moment(p.createdAt).fromNow()}</h6>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </li>
+        </ul>
+      </div>
+    );
+  };
   return (
     <BookHouseLayout
       pagetitle="Book House User Dashboard"
@@ -66,7 +114,7 @@ const BookhouseUserDashboard = () => {
       <div className="row">
         <div className="col-3">{bookhouseuserlinks()}</div>
         <div className="col-9">
-          {userinfo()} {purchaseHistory()}
+          {userinfo()} {purchaseBookHistory(history)}
         </div>
       </div>
     </BookHouseLayout>

@@ -40,6 +40,7 @@ const Checkout = ({ bookhouseproducts }) => {
     console.log("token" + token);
 
     getBraintreeClientToken(bookhouseuserId, token).then(data => {
+      console.log("Inside getBraintreeClientToken");
       if (data.error) {
         setData({ ...data, error: data.error });
       } else {
@@ -73,6 +74,7 @@ const Checkout = ({ bookhouseproducts }) => {
 
   const showDropIn = () => (
     <div onBlur={() => setData({ ...data, error: "" })}>
+      {bookhouseproducts.length}-jjj
       {data.clientToken !== null && bookhouseproducts.length > 0 ? (
         <div>
           <div className="gorm-group mb-3">
@@ -86,7 +88,7 @@ const Checkout = ({ bookhouseproducts }) => {
           </div>
           <DropIn
             options={{
-              authorization: data.clientToken,
+              authorization: "data.clientToken",
               paypal: {
                 flow: "vault"
               }
@@ -138,7 +140,8 @@ const Checkout = ({ bookhouseproducts }) => {
               bookhouseproducts: bookhouseproducts,
               transaction_id: response.transaction.id,
               amount: response.transaction.amount,
-              address: deliveryAddress
+              address: deliveryAddress,
+              bookhouseuser: bookhouseuser
             };
 
             createBookhouseOrder(bookhouseuserId, token, createOrderData)
@@ -189,6 +192,7 @@ const Checkout = ({ bookhouseproducts }) => {
       <h2>Total: ${getTotal()}</h2>
       {showSuccess(data.success)}
       {showError(data.error)}
+
       {showCheckout()}
     </div>
   );

@@ -18,6 +18,10 @@ import BookShop from "./bookhousecore/BookShop";
 import ProductDetails from "./bookhousecore/ProductDetails";
 import BookHouseCart from "./bookhousecore/BookHouseCart";
 import Orders from "./bookhouseadmin/BookHouseOrder";
+import BookHouseProfile from "./bookhouseuser/BookHouseProfile";
+import BookHouseManageProducts from "./bookhouseadmin/BookHouseManageProducts";
+import ModifyProduct from "./bookhouseadmin/ModifyProduct";
+import SearchComponent from "./bookhousecore/SearchComponent";
 
 const Routes = () => {
   return (
@@ -35,6 +39,11 @@ const Routes = () => {
           exact
           component={BookhouseUserDashboard}
         />
+        <PrivateRoute
+          path="/profile/:bookhouseuserId"
+          exact
+          component={BookHouseProfile}
+        />
         <SocialUserRoute
           path="/bookhousesocialuser/dashboard"
           exact
@@ -49,13 +58,23 @@ const Routes = () => {
         <AdminRoute path="/category/create" exact component={CreateCategory} />
         <AdminRoute path="/product/create" exact component={CreateProduct} />
         <AdminRoute path="/admin/orders" exact component={Orders} />
-
+        <AdminRoute
+          path="/admin/manageproducts"
+          exact
+          component={BookHouseManageProducts}
+        />
+        <AdminRoute
+          path="/admin/product/update/:bookhouseproductId"
+          exact
+          component={ModifyProduct}
+        />
         <Route
           path="/product/:bookhouseproductId"
           exact
           component={ProductDetails}
         />
         <Route path="/cart" exact component={BookHouseCart} />
+        <Route path="/search" exact component={SearchComponent} />
 
         <Route path="*" component={BookHouseError} />
       </Switch>

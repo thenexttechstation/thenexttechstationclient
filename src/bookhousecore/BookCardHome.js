@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
-import BookhouseImage from "./BookHouseImage";
+import BookHouseImageHome from "./BookHouseImageHome";
 import moment from "moment";
 import Chip from "@material-ui/core/Chip";
 import FaceIcon from "@material-ui/icons/Face";
@@ -11,7 +11,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { green } from "@material-ui/core/colors";
 import { addItem, updateCart, removeProductFromCart } from "./Cart";
 
-const BookCard = ({
+const BookCardHome = ({
   bookhouseproduct,
   showViewProductButton = true,
   viewAddToCartButton = true,
@@ -155,19 +155,21 @@ const BookCard = ({
           <h4>{bookhouseproduct.bookname}</h4>
         </div>
         <div className="card-body">
+          <p className="black-8">
+            <h3> Added on {moment(bookhouseproduct.createdAt).fromNow()}</h3>
+          </p>
           {shouldRedirect(redirect)}
-          <BookhouseImage item={bookhouseproduct} url="product" />
+          <BookHouseImageHome item={bookhouseproduct} url="product" />
           <p className="lead mt-2">
             {bookhouseproduct.bookdescription.substring(0, 100)}
           </p>
           <p className="black-9">
             <h3>Category: </h3>
+
             {bookhouseproduct.bookhousecategory &&
               bookhouseproduct.bookhousecategory.categoryname}
           </p>
-          <p className="black-8">
-            <h3> Added on {moment(bookhouseproduct.createdAt).fromNow()}</h3>
-          </p>
+
           <p className="black-10">
             <h3>Author:</h3>
             {bookhouseproduct.author}
@@ -192,4 +194,4 @@ const BookCard = ({
   );
 };
 
-export default BookCard;
+export default BookCardHome;

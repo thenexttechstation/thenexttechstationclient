@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import BookHouseLayout from "./BookhouseLayout";
 import { getCart } from "./Cart";
-import BookCard from "./BookCard";
+import BookCardCart from "./BookCardCart";
 import BookHouseCheckout from "./BookHouseCheckout";
 
 const BookHouseCart = () => {
@@ -19,7 +19,7 @@ const BookHouseCart = () => {
         <h2>Your cart has {`${items.length}`} items</h2>
         <hr />
         {items.map((bookhouseproduct, i) => (
-          <BookCard
+          <BookCardCart
             key={i}
             bookhouseproduct={bookhouseproduct}
             viewAddToCartButton={false}

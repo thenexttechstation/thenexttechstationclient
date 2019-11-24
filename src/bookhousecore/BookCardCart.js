@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
-import BookhouseImage from "./BookHouseImage";
+import BookHouseImageCart from "./BookHouseImageCart";
 import moment from "moment";
 import Chip from "@material-ui/core/Chip";
 import FaceIcon from "@material-ui/icons/Face";
@@ -10,8 +10,14 @@ import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
 import { green } from "@material-ui/core/colors";
 import { addItem, updateCart, removeProductFromCart } from "./Cart";
-
-const BookCard = ({
+import Switch from "@material-ui/core/Switch";
+import DeleteIcon from "@material-ui/icons/Delete";
+import FormLabel from "@material-ui/core/FormLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormHelperText from "@material-ui/core/FormHelperText";
+const BookCardCart = ({
   bookhouseproduct,
   showViewProductButton = true,
   viewAddToCartButton = true,
@@ -22,10 +28,17 @@ const BookCard = ({
 }) => {
   const [redirect, setRedirect] = useState(false);
   const [count, setCount] = useState(bookhouseproduct.count);
-
+  const [state, setState] = React.useState({
+    outofstock: false,
+    instock: true
+  });
   const useStyles = makeStyles(theme => ({
     root: {
       display: "flex",
+      button: {
+        margin: theme.spacing(1),
+        size: "large"
+      },
 
       justifyContent: "center",
       flexWrap: "wrap",
@@ -36,9 +49,7 @@ const BookCard = ({
   }));
   const classes = useStyles();
   const longText = `
-  Aliquam eget finibus ante, non facilisis lectus. Sed vitae dignissim est, vel aliquam tellus.
-  Praesent non nunc mollis, fermentum neque at, semper arcu.
-  Nullam eget est sed sem iaculis gravida eget vitae justo.
+  This Book is currently Out of stock.Please write to thenexttechstation@gmail.com for further enquires
   `;
   const showViewButton = showViewProductButton => {
     return (
@@ -55,15 +66,19 @@ const BookCard = ({
   const showRemoveButton = showRemoveProductButton => {
     return (
       showRemoveProductButton && (
-        <button
+        <Button
+          fullWidth="true"
+          variant="contained"
+          color="secondary"
           onClick={() => {
             removeProductFromCart(bookhouseproduct._id);
             setRun(!run);
           }}
-          className="btn btn-outline-danger mt-2 mb-2"
+          className={classes.button}
+          startIcon={<DeleteIcon />}
         >
-          Remove Product
-        </button>
+          Delete
+        </Button>
       )
     );
   };
@@ -80,9 +95,15 @@ const BookCard = ({
     return (
       cartUpdate && (
         <div>
-          <div className="input-group mb-3">
+          <div className="input-group ">
             <div className="input-group-prepend">
-              <span className="input-group-text">Quantity</span>
+              <button
+                type="button"
+                disabled
+                class="btn btn-danger btn-lg btn-block"
+              >
+                Quantity
+              </button>
             </div>
             <input
               type="number"
@@ -132,11 +153,31 @@ const BookCard = ({
   const showStock = quantity => {
     return quantity > 0 ? (
       <div className={classes.root}>
+        <FormControl component="fieldset">
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Switch
+                  edge="start"
+                  checked={state.instock}
+                  onChange={handleChange("instock")}
+                  value="instock"
+                  disabled="true"
+                  color="default"
+                  size="medium"
+                />
+              }
+              label="Book In Stock"
+            />
+          </FormGroup>
+        </FormControl>
         <Chip
           icon={<FaceIcon />}
           label="Book in Stock"
           onDelete={handleDelete}
           color="primary"
+          size="medium"
+          fullwidth="true"
           deleteIcon={<DoneIcon />}
         />
       </div>
@@ -151,12 +192,14 @@ const BookCard = ({
   return (
     <div>
       <div className="card">
+        {showRemoveButton(showRemoveProductButton)}
+
         <div className="card-header name">
           <h4>{bookhouseproduct.bookname}</h4>
         </div>
         <div className="card-body">
           {shouldRedirect(redirect)}
-          <BookhouseImage item={bookhouseproduct} url="product" />
+          <BookHouseImageCart item={bookhouseproduct} url="product" />
           <p className="lead mt-2">
             {bookhouseproduct.bookdescription.substring(0, 100)}
           </p>
@@ -181,7 +224,6 @@ const BookCard = ({
           {showViewButton(showViewProductButton)}
 
           {showAddToCartButton(viewAddToCartButton)}
-          {showRemoveButton(showRemoveProductButton)}
 
           {showCartUpdate(cartUpdate)}
         </div>
@@ -192,4 +234,4 @@ const BookCard = ({
   );
 };
 
-export default BookCard;
+export default BookCardCart;

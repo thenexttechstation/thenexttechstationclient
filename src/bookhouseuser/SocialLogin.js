@@ -249,13 +249,13 @@ const SocialLogin = props => {
         <form action="" className="form-login">
           <ul className="login-nav">
             <li className="login-nav__item active">
-              <a href="#">
-                <h2>Sign In</h2>
+              <a href="/login">
+                <h4>Sign In</h4>
               </a>
             </li>
             <li className="login-nav__item">
               <a href="/sociallogin">
-                <h2>Social Sign In</h2>
+                <h4>Social Sign In</h4>
               </a>
             </li>
           </ul>
@@ -312,7 +312,7 @@ const SocialLogin = props => {
           </button>
         </form>
         <a href="/register" className="login__forgot">
-          Register
+          <h4>Register</h4>
         </a>
       </div>
     </div>
@@ -377,7 +377,7 @@ const SocialLogin = props => {
       <BookHouseMenu></BookHouseMenu>
 
       <main id="main" class="d-flx bg-full" role="main">
-        <div class="container">{SocialLoginNewForm()}</div>
+        {SocialLoginNewForm()}
       </main>
     </div>
   );

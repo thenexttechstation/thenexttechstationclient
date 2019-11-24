@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
-import BookhouseImage from "./BookHouseImage";
+import BookHouseImageSearch from "./BookHouseImageSearch";
 import moment from "moment";
 import Chip from "@material-ui/core/Chip";
 import FaceIcon from "@material-ui/icons/Face";
@@ -11,7 +11,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { green } from "@material-ui/core/colors";
 import { addItem, updateCart, removeProductFromCart } from "./Cart";
 
-const BookCard = ({
+const BookCardSearch = ({
   bookhouseproduct,
   showViewProductButton = true,
   viewAddToCartButton = true,
@@ -156,7 +156,7 @@ const BookCard = ({
         </div>
         <div className="card-body">
           {shouldRedirect(redirect)}
-          <BookhouseImage item={bookhouseproduct} url="product" />
+          <BookHouseImageSearch item={bookhouseproduct} url="product" />
           <p className="lead mt-2">
             {bookhouseproduct.bookdescription.substring(0, 100)}
           </p>
@@ -192,4 +192,4 @@ const BookCard = ({
   );
 };
 
-export default BookCard;
+export default BookCardSearch;

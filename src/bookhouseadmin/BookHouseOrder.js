@@ -2,11 +2,16 @@ import React, { useState, useEffect } from "react";
 import BookHouseLayout from "../bookhousecore/BookhouseLayout";
 import { isAuthenticated } from "../bookhouseapi/Bookhouseuserapi";
 import { Link } from "react-router-dom";
-import { listOrders } from "./Bookhouseadminapi";
+import {
+  listOrders,
+  getOrderStatusValues,
+  updateOrderStatus
+} from "./Bookhouseadminapi";
 import moment from "moment";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const [statusValues, setStatusValues] = useState([]);
 
   const { bookhouseuser, signedtoken } = isAuthenticated();
 
@@ -19,9 +24,18 @@ const Orders = () => {
       }
     });
   };
-
+  const loadOrderStatusValues = () => {
+    getOrderStatusValues(bookhouseuser._id, signedtoken).then(data => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setStatusValues(data);
+      }
+    });
+  };
   useEffect(() => {
     loadOrders();
+    loadOrderStatusValues();
   }, []);
 
   const showOrdersLength = () => {
@@ -34,10 +48,50 @@ const Orders = () => {
     }
   };
 
+  const showInput = (key, value) => (
+    <div className="input-group mb-2 mr-sm-2">
+      <div className="input-group-prepend">
+        <div className="input-group-text">{key}</div>
+      </div>
+      <input type="text" value={value} className="form-control" readOnly />
+    </div>
+  );
+
+  const showOrderStatus = o => (
+    <div className="form-group">
+      <h3 className="mark mb-4">Status: {o.status}</h3>
+      <select
+        className="form-control"
+        onChange={e => handleStatusChange(e, o._id)}
+      >
+        <option>Update Status</option>
+        {statusValues.map((status, index) => (
+          <option key={index} value={status}>
+            {status}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+  const handleStatusChange = (e, orderId) => {
+    updateOrderStatus(
+      bookhouseuser._id,
+      signedtoken,
+      orderId,
+      e.target.value
+    ).then(data => {
+      if (data.error) {
+        console.log("Status update failed");
+      } else {
+        loadOrders();
+      }
+    });
+  };
+
   return (
     <BookHouseLayout
-      title="Orders"
-      description={`G'day ${bookhouseuser.username}, you can manage all the orders here`}
+      pagetitle="Orders"
+      pagedescription={`G'day ${bookhouseuser.username}, you can manage all the orders here`}
     >
       <div className="row">
         <div className="col-md-8 offset-md-2">
@@ -55,13 +109,16 @@ const Orders = () => {
                 </h2>
 
                 <ul className="list-group mb-2">
-                  <li className="list-group-item">{o.status}</li>
+                  <li className="list-group-item"> {showOrderStatus(o)}</li>
                   <li className="list-group-item">
                     Transaction ID: {o.transaction_id}
                   </li>
-                  <li className="list-group-item">Amount: ${o.amount}</li>
+                  <li className="list-group-item">Amount: Rs{o.amount}</li>
                   <li className="list-group-item">
-                    Ordered by: {o.bookhouseuser.username}
+                    Ordered by: {bookhouseuser.username}
+                  </li>
+                  <li className="list-group-item">
+                    Email: {bookhouseuser.email}
                   </li>
                   <li className="list-group-item">
                     Ordered on: {moment(o.createdAt).fromNow()}
@@ -74,6 +131,21 @@ const Orders = () => {
                 <h3 className="mt-4 mb-4 font-italic">
                   Total products in the order: {o.bookhouseproducts.length}
                 </h3>
+                {o.bookhouseproducts.map((p, pIndex) => (
+                  <div
+                    className="mb-4"
+                    key={pIndex}
+                    style={{
+                      padding: "20px",
+                      border: "1px solid indigo"
+                    }}
+                  >
+                    {showInput("Product name", p.bookname)}
+                    {showInput("Product price", p.price)}
+                    {showInput("Product total", p.count)}
+                    {showInput("Product Id", p._id)}
+                  </div>
+                ))}
               </div>
             );
           })}

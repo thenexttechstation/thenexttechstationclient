@@ -38,10 +38,10 @@
 }
 
 #gap {
-  background: chocolate;
+  background: rgba(26, 49, 95, 1);
 }
 #shoppage {
-  background: rgb(226, 215, 216);
+  background: rgb(245, 243, 243);
 }
 
 /**
@@ -51,12 +51,12 @@
 .jumbotron {
   width: 50wh;
   height: 50vh;
-  color: #05075a;
+  color: #06358b;
 
-  background: url("https://bootstrapcreative.com/wp-bc/wp-content/uploads/2017/03/learning-story.png")
-    top center no-repeat;
+  background: url("https://bookhouse.s3.amazonaws.com/col11.jpg") top center
+    no-repeat;
 
-  background-size: 400% 400%;
+  background-size: 120% 120%;
   -webkit-animation: Gradient 15s ease infinite;
   -moz-animation: Gradient 15s ease infinite;
   animation: Gradient 15s ease infinite;
@@ -111,7 +111,7 @@
 }
 
 .name {
-  background: rgb(131, 8, 8);
+  background: #010407;
   color: black;
   font-weight: bold;
 }

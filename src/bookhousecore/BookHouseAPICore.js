@@ -61,6 +61,18 @@ export const listProducts = params => {
     .catch(err => console.log(err));
 };
 
+export const listAuthorProducts = params => {
+  const query = queryString.stringify(params);
+  console.log("query", query);
+  return fetch(`${BOOKHOUSEAPI}/products/authorsearch?${query}`, {
+    method: "GET"
+  })
+    .then(response => {
+      return response.json();
+    })
+    .catch(err => console.log(err));
+};
+
 export const fetchSingleBook = bookhouseproductId => {
   return fetch(`${BOOKHOUSEAPI}/product/${bookhouseproductId}`, {
     method: "GET"
@@ -84,6 +96,9 @@ export const fetchRelatedProduct = bookhouseproductId => {
 };
 
 export const getBraintreeClientToken = (bookhouseuserId, token) => {
+  console.log("Inside getBraintreeClientToken" + bookhouseuserId);
+  console.log("Inside getBraintreeClientToken" + token);
+
   return fetch(`${BOOKHOUSEAPI}/braintree/getToken/${bookhouseuserId}`, {
     method: "GET",
     headers: {
@@ -113,7 +128,9 @@ export const processPayment = (bookhouseuserId, token, paymentData) => {
     })
     .catch(err => console.log(err));
 };
-
+export function matchStocks(state, value) {
+  return state.bookname.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+}
 export const createBookhouseOrder = (
   bookhouseuserId,
   token,
