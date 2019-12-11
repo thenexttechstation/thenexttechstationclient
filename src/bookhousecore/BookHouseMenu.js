@@ -176,6 +176,25 @@ const BookHouseMenu = ({ history }) => (
           <h3>Search Book</h3>
         </Link>
       </li>
+
+      <li className="nav-item">
+        <Link
+          className="nav-link"
+          style={isActive(history, "/editorspick")}
+          to="/editorspick"
+        >
+          <h3>Editors Pick</h3>
+        </Link>
+      </li>
+      <li className="nav-item">
+        <Link
+          className="nav-link"
+          style={isActive(history, "/catalog")}
+          to="/catalog"
+        >
+          <h3>Catalog</h3>
+        </Link>
+      </li>
     </ul>
   </div>
 );

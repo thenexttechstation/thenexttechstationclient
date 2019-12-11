@@ -14,7 +14,9 @@ import {
   authenticateUser,
   isAuthenticated,
   authenticateSocialUser,
-  isSocialAuthenticated
+  validateandwriteinUserDB,
+  isSocialAuthenticated,
+  createanuserentry
 } from "../bookhouseapi/Bookhouseuserapi";
 
 import * as firebase from "firebase/app";
@@ -24,8 +26,9 @@ import "firebase/auth";
 import "firebase/firestore";
 
 const SocialLogin = props => {
-  let user = isSocialAuthenticated();
-  let { uid, email } = user;
+  var user = isSocialAuthenticated();
+  const { displayName, email, photoURL, lastLoginAt } = user;
+
   if (!firebase.apps.length) {
     try {
       firebase.initializeApp(firebaseConfig);
@@ -46,13 +49,37 @@ const SocialLogin = props => {
         var token = result.credential.accessToken;
         // The signed-in user info.
         var user = result.user;
+        //const { email, uid, displayName } = user;
+        const {
+          providerData: [{ providerId, uid, displayName, email }]
+        } = user;
+        console.log("providerId" + providerId);
+        const password = "test";
+        const username = displayName;
         if (user) {
-          const { uid } = user;
-          console.log("hello here" + uid);
+          console.log("hello here" + email);
+          console.log("hello here1" + uid);
+          console.log("hello here1" + displayName);
+
           console.log("hello last" + JSON.stringify(user));
 
           authenticateSocialUser(user, () => {});
 
+          createanuserentry({
+            email: email,
+            password: password,
+            username: displayName,
+            provider: "Google"
+          });
+          loginUser({ email: email, password: password }).then(logindata => {
+            console.log("Inside logindata");
+            if (logindata.error) {
+            } else {
+              console.log("inside else of callLoginAPI");
+              console.log("LOGINDATA" + JSON.stringify(logindata));
+              authenticateUser(logindata, () => {});
+            }
+          });
           redirectAfterLogin();
         }
 

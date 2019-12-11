@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import BookhouseLayout from "./BookhouseLayout";
 import BookShopCard from "./BookShopCard";
+import BookCardHome from "./BookCardHome";
+
 import {
   getcategories,
   getFilteredProducts
@@ -12,7 +14,8 @@ import Carousal from "../bookhousecore/Carousal";
 import Fab from "@material-ui/core/Fab";
 import NavigationIcon from "@material-ui/icons/Navigation";
 import { makeStyles } from "@material-ui/core/styles";
-
+import { Grid, Segment } from "semantic-ui-react";
+import { Button, Icon, Message } from "semantic-ui-react";
 const BookShop = () => {
   const [myFilters, setMyFilters] = useState({
     filters: { bookhousecategory: [], price: [] }
@@ -125,9 +128,19 @@ const BookShop = () => {
       description="Search and find books of your choice"
       className="container-fluid"
     >
-      <Carousal></Carousal>
       <div id="shoppage" className="row">
-        <div className="col-xs-6 col-md-2">
+        <div className="col-xs-6 col-md-4">
+          <br></br>
+          <Grid columns="equal" divided inverted padded>
+            <Grid.Row color="black" inverted textAlign="center">
+              <Grid.Column>
+                <Segment color="yellow" inverted>
+                  <h3>Filter By Category</h3>
+                </Segment>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+
           <h3>Filter by categories</h3>
           <ul>
             <CategoryCheckbox
@@ -139,7 +152,17 @@ const BookShop = () => {
           </ul>
 
           <br></br>
+          <Grid columns="equal" divided inverted padded>
+            <Grid.Row inverted textAlign="center">
+              <Grid.Column>
+                <Segment color="teal" inverted>
+                  <h3>Filter By Price</h3>
+                </Segment>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
           <h3>Filter by price range</h3>
+
           <div id="pricebox">
             <PriceRadioBox
               prices={prices}
@@ -147,19 +170,26 @@ const BookShop = () => {
             />
           </div>
         </div>
-        <div id="gap" className="col-xs-6 col-md-2"></div>
 
         <div className="col-xs-6 col-md-8">
-          <h3>Products</h3>
-          <div>
-            {filteredResults.map((bookhouseproduct, i) => (
-              <div key={i}>
-                <BookShopCard bookhouseproduct={bookhouseproduct} />
-              </div>
-            ))}
-          </div>
-          <hr />
-          {loadMoreButton()}
+          <Grid columns="equal" divided inverted padded>
+            <Grid.Row color="black" textAlign="center">
+              <Grid.Column>
+                <Segment color="black" inverted>
+                  <h4>Products</h4>
+                  <div>
+                    {filteredResults.map((bookhouseproduct, i) => (
+                      <div key={i}>
+                        <BookShopCard bookhouseproduct={bookhouseproduct} />
+                      </div>
+                    ))}
+                    <hr />
+                    {loadMoreButton()}
+                  </div>
+                </Segment>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </div>
       </div>
     </BookhouseLayout>

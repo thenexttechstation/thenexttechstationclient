@@ -4,6 +4,7 @@ import BookHouseLayout from "./BookhouseLayout";
 import { getCart } from "./Cart";
 import BookCardCart from "./BookCardCart";
 import BookHouseCheckout from "./BookHouseCheckout";
+import { Button, Card, Image } from "semantic-ui-react";
 
 const BookHouseCart = () => {
   const [items, setItems] = useState([]);
@@ -34,9 +35,16 @@ const BookHouseCart = () => {
   };
 
   const noItemsMessage = () => (
-    <h2>
-      Your cart is empty. <br /> <Link to="/shop">Continue shopping</Link>
-    </h2>
+    <div>
+      <h2>
+        Your cart is empty. <br /> <Link to="/shop">Continue shopping</Link>
+      </h2>
+      <Image
+        src="https://bookhouse.s3.amazonaws.com/tc6.jpg"
+        size="medium"
+        rounded
+      />
+    </div>
   );
 
   return (

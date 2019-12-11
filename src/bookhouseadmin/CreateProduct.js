@@ -6,6 +6,7 @@ import {
   addProducts,
   getcategories
 } from "../bookhouseadmin/Bookhouseadminapi";
+import { Button, Segment } from "semantic-ui-react";
 
 const AddProduct = () => {
   const [values, setValues] = useState({
@@ -22,7 +23,8 @@ const AddProduct = () => {
     createdBook: "",
     redirectToProfile: false,
     formData: "",
-    author: ""
+    author: "",
+    imageurl: ""
   });
 
   const { bookhouseuser, signedtoken } = isAuthenticated();
@@ -34,6 +36,7 @@ const AddProduct = () => {
     bookhousecategories,
     bookhousecategory,
     deliverable,
+    imageurl,
     quantity,
     loading,
     error,
@@ -93,6 +96,7 @@ const AddProduct = () => {
           price: "",
           quantity: "",
           loading: false,
+          imageurl: "",
           createdBook: data.data.bookname
         });
       }
@@ -101,9 +105,9 @@ const AddProduct = () => {
 
   const newPostForm = () => (
     <form className="mb-3" onSubmit={clickSubmit}>
-      <h4>Upload Image</h4>
+      <h3>Upload Image</h3>
       <div className="form-group">
-        <label className="btn btn-secondary">
+        <label className="btn btn-primary btn-block">
           <input
             onChange={handleChange("image")}
             type="file"
@@ -112,9 +116,8 @@ const AddProduct = () => {
           />
         </label>
       </div>
-
       <div className="form-group">
-        <label className="text-muted">Book Name</label>
+        <h4 className="text-muted">Book Name</h4>
         <input
           onChange={handleChange("bookname")}
           type="text"
@@ -122,18 +125,24 @@ const AddProduct = () => {
           value={bookname}
         />
       </div>
-
       <div className="form-group">
-        <label className="text-muted">Book Description</label>
+        <h4 className="text-muted">Book Description</h4>
         <textarea
           onChange={handleChange("bookdescription")}
           className="form-control"
           value={bookdescription}
         />
       </div>
-
       <div className="form-group">
-        <label className="text-muted">Author</label>
+        <h4 className="text-muted">Image Url1</h4>
+        <textarea
+          onChange={handleChange("imageurl")}
+          className="form-control"
+          value={imageurl}
+        />
+      </div>
+      <div className="form-group">
+        <h4 className="text-muted">Author</h4>
         <input
           onChange={handleChange("author")}
           type="text"
@@ -141,9 +150,8 @@ const AddProduct = () => {
           value={author}
         />
       </div>
-
       <div className="form-group">
-        <label className="text-muted">Price</label>
+        <h4 className="text-muted">Price</h4>
         <input
           onChange={handleChange("price")}
           type="number"
@@ -151,9 +159,8 @@ const AddProduct = () => {
           value={price}
         />
       </div>
-
       <div className="form-group">
-        <label className="text-muted">Book HouseCategory</label>
+        <h4 className="text-muted">Book HouseCategory</h4>
         <select
           onChange={handleChange("bookhousecategory")}
           className="form-control"
@@ -167,18 +174,16 @@ const AddProduct = () => {
             ))}
         </select>
       </div>
-
       <div className="form-group">
-        <label className="text-muted">Delivery</label>
+        <h4 className="text-muted">Delivery</h4>
         <select onChange={handleChange("deliverable")} className="form-control">
           <option>Please select</option>
           <option value="0">No</option>
           <option value="1">Yes</option>
         </select>
       </div>
-
       <div className="form-group">
-        <label className="text-muted">Quantity</label>
+        <h4 className="text-muted">Quantity</h4>
         <input
           onChange={handleChange("quantity")}
           type="number"
@@ -186,8 +191,12 @@ const AddProduct = () => {
           value={quantity}
         />
       </div>
-
-      <button className="btn btn-outline-primary">Create Book</button>
+      <Segment inverted>
+        <Button color="olive" inverted size="large">
+          Create Book
+        </Button>
+      </Segment>{" "}
+      {/* <button className="btn btn-outline-primary">Create Book</button> */}
     </form>
   );
 

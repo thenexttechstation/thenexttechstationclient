@@ -4,6 +4,7 @@ import { isAuthenticated } from "../bookhouseapi/Bookhouseuserapi";
 import { Link } from "react-router-dom";
 import { addCategory } from "../bookhouseadmin/Bookhouseadminapi";
 import BookHouseMenu from "../bookhousecore/BookHouseMenu";
+import { Grid, Segment, Button, Message } from "semantic-ui-react";
 
 const CreateCategory = () => {
   const [categoryname, setCategoryName] = useState("");
@@ -76,30 +77,57 @@ const CreateCategory = () => {
   const addNewCategoryForm = () => (
     <div>
       <BookHouseMenu></BookHouseMenu>
-      <div class="container">
-        <h2>BOOK HOUSE CATEGORY CREATION</h2>
-        <form class="form-horizontal" onSubmit={clickSubmit}>
-          <div class="form-group">
-            <label class="control-label col-sm-2">Category Name</label>
-            <div class="col-sm-5">
-              <input
-                onChange={handleChange}
-                type="text"
-                className="form-control"
-                value={categoryname}
-                autoFocus
-                required
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <Grid stackable columns={2}>
+        <Grid.Column>
+          <Segment inverted color="black">
+            <div>
+              <Message
+                icon="announcement"
+                header="BOOK HOUSE CATEGORY CREATION"
+                content="Create book category"
               />
             </div>
-          </div>
 
-          <div class="form-group">
-            <button className="btn btn-success btn-lg btn-block">
-              Create Category
-            </button>
-          </div>
-        </form>
-      </div>
+            <form class="form-horizontal" onSubmit={clickSubmit}>
+              <div class="form-group">
+                <h4>Category Name</h4>
+                <div class="col-sm-5">
+                  <input
+                    onChange={handleChange}
+                    type="text"
+                    className="form-control"
+                    value={categoryname}
+                    autoFocus
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <Segment inverted>
+                  <Button inverted color="green" size="massive">
+                    Create Category
+                  </Button>
+                </Segment>
+              </div>
+            </form>
+          </Segment>
+        </Grid.Column>
+        <Grid.Column>
+          <Segment inverted color="teal">
+            <Segment inverted>
+              <Button inverted color="blue" size="massive">
+                {goAdminDashBoard()}
+              </Button>
+            </Segment>
+          </Segment>
+        </Grid.Column>
+      </Grid>
     </div>
   );
 
@@ -108,7 +136,6 @@ const CreateCategory = () => {
       {displayErrorMessage()}
       {displaySuccessMessage()}
       {addNewCategoryForm()}
-      {goAdminDashBoard()}
     </div>
   );
 };

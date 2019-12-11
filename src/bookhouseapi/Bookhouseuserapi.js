@@ -1,5 +1,22 @@
 import { BOOKHOUSEAPI } from "../config";
 
+export const createanuserentry = bookhouseuser => {
+  return fetch(`${BOOKHOUSEAPI}/socialuser`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(bookhouseuser)
+  })
+    .then(response => {
+      return response.json();
+    })
+    .catch(error => {
+      //console.log(error);
+    });
+};
+
 export const registerUser = bookhouseuser => {
   return fetch(`${BOOKHOUSEAPI}/register`, {
     method: "POST",

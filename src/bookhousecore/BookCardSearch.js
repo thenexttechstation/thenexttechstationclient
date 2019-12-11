@@ -6,10 +6,11 @@ import Chip from "@material-ui/core/Chip";
 import FaceIcon from "@material-ui/icons/Face";
 import DoneIcon from "@material-ui/icons/Done";
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+//import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
 import { green } from "@material-ui/core/colors";
 import { addItem, updateCart, removeProductFromCart } from "./Cart";
+import { Button, Icon, Message } from "semantic-ui-react";
 
 const BookCardSearch = ({
   bookhouseproduct,
@@ -131,20 +132,22 @@ const BookCardSearch = ({
   };
   const showStock = quantity => {
     return quantity > 0 ? (
-      <div className={classes.root}>
-        <Chip
-          icon={<FaceIcon />}
-          label="Book in Stock"
-          onDelete={handleDelete}
-          color="primary"
-          deleteIcon={<DoneIcon />}
-        />
+      <div>
+        <Message color="white" icon>
+          <Icon name="book" loading />
+          <Message.Content>
+            <Message.Header>{bookhouseproduct.bookname}</Message.Header>
+            In stock
+          </Message.Content>
+        </Message>
       </div>
     ) : (
       <div>
-        <Tooltip title={longText}>
-          <Button className={classes.button}>Book is Out of Stock</Button>
-        </Tooltip>
+        <Message
+          icon="announcement"
+          header="Sorry someone is reading this book right now"
+          content="Book is out of stock."
+        />
       </div>
     );
   };
@@ -155,28 +158,24 @@ const BookCardSearch = ({
           <h4>{bookhouseproduct.bookname}</h4>
         </div>
         <div className="card-body">
+          {showStock(bookhouseproduct.quantity)}
           {shouldRedirect(redirect)}
+
           <BookHouseImageSearch item={bookhouseproduct} url="product" />
+          <h3>Author: {bookhouseproduct.author}</h3>
+          {/* <h3>Category: </h3>
+          {bookhouseproduct.bookhousecategory &&
+            bookhouseproduct.bookhousecategory.categoryname} */}
           <p className="lead mt-2">
             {bookhouseproduct.bookdescription.substring(0, 100)}
           </p>
-          <p className="black-9">
-            <h3>Category: </h3>
-            {bookhouseproduct.bookhousecategory &&
-              bookhouseproduct.bookhousecategory.categoryname}
-          </p>
-          <p className="black-8">
-            <h3> Added on {moment(bookhouseproduct.createdAt).fromNow()}</h3>
-          </p>
-          <p className="black-10">
-            <h3>Author:</h3>
-            {bookhouseproduct.author}
-          </p>
+
+          <h3> Added on {moment(bookhouseproduct.createdAt).fromNow()}</h3>
+
           <h3>Rs {bookhouseproduct.price}</h3>
 
           <br />
 
-          {showStock(bookhouseproduct.quantity)}
           <br />
           {showViewButton(showViewProductButton)}
 

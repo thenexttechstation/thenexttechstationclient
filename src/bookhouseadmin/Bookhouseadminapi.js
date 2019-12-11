@@ -30,7 +30,7 @@ export const addProducts = (userId, token, product) => {
       return response.json();
     })
     .catch(err => {
-      console.log(err);
+      console.log("Inside error" + err);
     });
 };
 

@@ -8,9 +8,11 @@ import {
   updateOrderStatus
 } from "./Bookhouseadminapi";
 import moment from "moment";
+import { Button, Segment, Card, Image, Icon } from "semantic-ui-react";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const [imagebookname, setImageBookName] = useState([]);
   const [statusValues, setStatusValues] = useState([]);
 
   const { bookhouseuser, signedtoken } = isAuthenticated();
@@ -49,11 +51,15 @@ const Orders = () => {
   };
 
   const showInput = (key, value) => (
-    <div className="input-group mb-2 mr-sm-2">
-      <div className="input-group-prepend">
-        <div className="input-group-text">{key}</div>
-      </div>
-      <input type="text" value={value} className="form-control" readOnly />
+    <div>
+      <Segment color="teal" inverted>
+        <div>
+          <div>
+            <h4>{key}</h4>
+          </div>
+        </div>
+        <input type="text" value={value} className="form-control" readOnly />
+      </Segment>
     </div>
   );
 
@@ -88,6 +94,10 @@ const Orders = () => {
     });
   };
 
+  const setimageurl = p => {
+    console.log("Bookname" + p.bookname);
+    setImageBookName(p.bookname);
+  };
   return (
     <BookHouseLayout
       pagetitle="Orders"
@@ -104,48 +114,68 @@ const Orders = () => {
                 key={oIndex}
                 style={{ borderBottom: "5px solid indigo" }}
               >
-                <h2 className="mb-5">
+                <Segment inverted>
+                  <Button color="yellow" inverted size="massive">
+                    Order ID: {o._id}
+                  </Button>
+                </Segment>
+                {/* <h2 className="mb-5">
                   <span className="bg-primary">Order ID: {o._id}</span>
-                </h2>
+                </h2> */}
 
                 <ul className="list-group mb-2">
                   <li className="list-group-item"> {showOrderStatus(o)}</li>
                   <li className="list-group-item">
-                    Transaction ID: {o.transaction_id}
-                  </li>
-                  <li className="list-group-item">Amount: Rs{o.amount}</li>
-                  <li className="list-group-item">
-                    Ordered by: {bookhouseuser.username}
+                    <h3>Transaction ID: {o.transaction_id}</h3>
                   </li>
                   <li className="list-group-item">
-                    Email: {bookhouseuser.email}
+                    <h3>Amount: Rs{o.amount}</h3>
                   </li>
                   <li className="list-group-item">
-                    Ordered on: {moment(o.createdAt).fromNow()}
+                    <h3>Ordered by: {bookhouseuser.username}</h3>
                   </li>
                   <li className="list-group-item">
-                    Delivery address: {o.address}
+                    <h3>Email: {bookhouseuser.email}</h3>
+                  </li>
+                  <li className="list-group-item">
+                    <h3>Ordered on: {moment(o.createdAt).fromNow()}</h3>
+                  </li>
+                  <li className="list-group-item">
+                    <h3>Delivery address: {o.address}</h3>
                   </li>
                 </ul>
-
-                <h3 className="mt-4 mb-4 font-italic">
-                  Total products in the order: {o.bookhouseproducts.length}
-                </h3>
-                {o.bookhouseproducts.map((p, pIndex) => (
-                  <div
-                    className="mb-4"
-                    key={pIndex}
-                    style={{
-                      padding: "20px",
-                      border: "1px solid indigo"
-                    }}
-                  >
-                    {showInput("Product name", p.bookname)}
-                    {showInput("Product price", p.price)}
-                    {showInput("Product total", p.count)}
-                    {showInput("Product Id", p._id)}
-                  </div>
-                ))}
+                <Segment>
+                  <h3 className="mt-4 mb-4 font-italic">
+                    Total products in the order: {o.bookhouseproducts.length}
+                  </h3>
+                  {o.bookhouseproducts.map((p, pIndex) => (
+                    <div
+                      className="mb-4"
+                      key={pIndex}
+                      style={{
+                        padding: "20px",
+                        border: "1px solid indigo"
+                      }}
+                    >
+                      <Card>
+                        hh{p.bookname}
+                        <Image src={p.imageurl} wrapped ui={false} />
+                        <Card.Content>
+                          <Card.Header>{p.bookname}</Card.Header>
+                          <Card.Meta>
+                            <span className="date">Rs:{p.price}</span>
+                          </Card.Meta>
+                          <Card.Description>{p._id}</Card.Description>
+                        </Card.Content>
+                        <Card.Content extra></Card.Content>
+                      </Card>
+                      {showInput("Product name", p.bookname)}
+                      {showInput("Product price", p.price)}
+                      {showInput("Product total", p.count)}
+                      {showInput("Product Id", p._id)}
+                    </div>
+                  ))}
+                </Segment>
               </div>
             );
           })}

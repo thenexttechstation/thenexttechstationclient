@@ -10,10 +10,11 @@ const Register = () => {
     email: "",
     password: "",
     error: "",
-    success: false
+    success: false,
+    provider: ""
   });
 
-  const { username, email, password, success, error } = values;
+  const { username, email, password, success, error, provider } = values;
 
   const handleChange = name => event => {
     setValues({ ...values, error: false, [name]: event.target.value });
@@ -22,26 +23,30 @@ const Register = () => {
   const callRegisterationAPI = event => {
     event.preventDefault();
     setValues({ ...values, error: false });
-    registerUser({ username: username, email: email, password: password }).then(
-      registrationdata => {
-        if (registrationdata.error) {
-          setValues({
-            ...values,
-            error: registrationdata.error,
-            success: false
-          });
-        } else {
-          setValues({
-            ...values,
-            username: "",
-            email: "",
-            password: "",
-            success: true,
-            error: ""
-          });
-        }
+
+    ({
+      username: username,
+      email: email,
+      password: password,
+      provider: "bookhouse"
+    }.then(registrationdata => {
+      if (registrationdata.error) {
+        setValues({
+          ...values,
+          error: registrationdata.error,
+          success: false
+        });
+      } else {
+        setValues({
+          ...values,
+          username: "",
+          email: "",
+          password: "",
+          success: true,
+          error: ""
+        });
       }
-    );
+    }));
   };
 
   const registrationNewForm = () => (

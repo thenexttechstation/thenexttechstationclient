@@ -7,6 +7,7 @@ import {
   getcategories,
   updateProduct
 } from "../bookhouseadmin/Bookhouseadminapi";
+import { Grid, Segment, Button, Message } from "semantic-ui-react";
 
 const ModifyProduct = ({ match }) => {
   const [values, setValues] = useState({
@@ -18,6 +19,7 @@ const ModifyProduct = ({ match }) => {
     deliverable: "",
     quantity: "",
     image: "",
+    imageurl: "",
     loading: false,
     error: false,
     createdProduct: "",
@@ -34,6 +36,7 @@ const ModifyProduct = ({ match }) => {
     bookhousecategories,
     bookhousecategory,
     deliverable,
+    imageurl,
     quantity,
     loading,
     error,
@@ -59,7 +62,7 @@ const ModifyProduct = ({ match }) => {
           bookhousecategory: data.bookhousecategory._id,
           deliverable: data.deliverable,
           quantity: data.quantity,
-
+          imageurl: data.imageurl,
           author: data.author,
           formData: new FormData()
         });
@@ -113,6 +116,7 @@ const ModifyProduct = ({ match }) => {
           bookdescription: "",
           image: "",
           price: "",
+          imageurl: "",
           quantity: "",
           loading: false,
           error: false,
@@ -154,6 +158,15 @@ const ModifyProduct = ({ match }) => {
           onChange={handleChange("bookdescription")}
           className="form-control"
           value={bookdescription}
+        />
+      </div>
+
+      <div className="form-group">
+        <label className="text-muted">Image url</label>
+        <textarea
+          onChange={handleChange("imageurl")}
+          className="form-control"
+          value={imageurl}
         />
       </div>
 

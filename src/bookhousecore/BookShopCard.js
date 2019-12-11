@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import BookhouseImage from "./BookHouseImage";
 import moment from "moment";
-
+import { Grid, Segment } from "semantic-ui-react";
+import { Button, Icon, Message } from "semantic-ui-react";
 const BookShopCard = ({ bookhouseproduct, showViewProductButton = true }) => {
   const showViewButton = showViewProductButton => {
     return (
@@ -24,35 +25,44 @@ const BookShopCard = ({ bookhouseproduct, showViewProductButton = true }) => {
   };
   const showStock = quantity => {
     return quantity > 0 ? (
-      <span className="badge badge-primary badge-pill">In Stock</span>
+      <Message color="white" icon>
+        <Icon name="book" loading />
+        <Message.Content>
+          <Message.Header>{bookhouseproduct.bookname}</Message.Header>
+          In stock
+        </Message.Content>
+      </Message>
     ) : (
-      <span className="badge badge-primary badge-pill">Out of Stock</span>
+      <Message
+        icon="announcement"
+        header="Sorry someone is reading this book right now"
+        content="Book is out of stock."
+      />
     );
   };
   return (
     <div>
       <div className="card">
         <div className="card-header">
-          <h4>{bookhouseproduct.bookname}</h4>
+          <h3>{bookhouseproduct.bookname}</h3>
         </div>
+        {showStock(bookhouseproduct.quantity)}
         <div className="card-body">
           <BookhouseImage item={bookhouseproduct} url="product" />
           <p className="lead mt-2">
             {bookhouseproduct.bookdescription.substring(0, 100)}
           </p>
-          <p className="black-10">${bookhouseproduct.price}</p>
-          <p className="black-9">
+          <h3 className="black-10">Price :Rs {bookhouseproduct.price}</h3>
+          <h3 className="black-9">
             Category:{" "}
             {bookhouseproduct.bookhousecategory &&
               bookhouseproduct.bookhousecategory.categoryname}
-          </p>
-          <p className="black-8">
+          </h3>
+          <h3 className="black-8">
             Added on {moment(bookhouseproduct.createdAt).fromNow()}
-          </p>
-          <p className="black-10">${bookhouseproduct.author}</p>
-          <p>${bookhouseproduct.price}</p>
-          <p>{bookhouseproduct.author}</p>
-          {showStock(bookhouseproduct.quantity)}
+          </h3>
+          <h3 className="black-10">Author: {bookhouseproduct.author}</h3>
+
           <br />
           {showViewButton(showViewProductButton)}
 

@@ -1,5 +1,7 @@
 import React from "react";
 import BookHouseMenu from "./BookHouseMenu";
+import BookHouseFooter from "./BookHouseFooter";
+
 import BookHouseBottomMenu from "./BookHouseBottomMenu";
 
 import "../styles.css";
@@ -16,9 +18,8 @@ const BookHouseLayout = ({
       <h2>{pagetitle}</h2>
       <p>{pagedescription}</p>
     </div>
-
     <div className={className}>{children}</div>
-    <BookHouseBottomMenu />
+    <BookHouseFooter />
   </div>
 );
 

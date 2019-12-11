@@ -4,6 +4,7 @@ import { isAuthenticated } from "../bookhouseapi/Bookhouseuserapi";
 import { Link } from "react-router-dom";
 import { getBookPurchaseHistory } from "./Userapi";
 import moment from "moment";
+import { Button, Segment } from "semantic-ui-react";
 
 const BookhouseUserDashboard = () => {
   const [history, setHistory] = useState([]);
@@ -35,12 +36,20 @@ const BookhouseUserDashboard = () => {
         <ul className="list-group">
           <li className="list-group-item">
             <Link className="nav-link" to="/cart">
-              My Cart
+              <Segment inverted>
+                <Button color="yellow" inverted size="massive">
+                  My Cart
+                </Button>
+              </Segment>{" "}
             </Link>
           </li>
           <li className="list-group-item">
             <Link className="nav-link" to={`/profile/${_id}`}>
-              Update Profile
+              <Segment inverted>
+                <Button color="orange" inverted size="massive">
+                  Update Profile
+                </Button>
+              </Segment>
             </Link>
           </li>
         </ul>
@@ -54,13 +63,13 @@ const BookhouseUserDashboard = () => {
         <h3 className="card-header"> Book House User Information</h3>
         <ul className="list-group">
           <li className="list-group-item">
-            <label>User Name: {username}</label>
+            <h3>User Name: {username}</h3>
           </li>
           <li className="list-group-item">
-            <label>Email: {email}</label>
+            <h3>Email: {email}</h3>
           </li>
           <li className="list-group-item">
-            <label>Role : {userrole === 1 ? "Admin" : "Customer"}</label>
+            <h3>Role : {userrole === 1 ? "Admin" : "Customer"}</h3>
           </li>
         </ul>
       </div>
@@ -91,9 +100,9 @@ const BookhouseUserDashboard = () => {
                     return (
                       <div key={i}>
                         {JSON.stringify(p)}
-                        <h6>Product name: {p.bookname}</h6>
-                        <h6>Product price: ${p.price}</h6>
-                        <h6>Purchased date: {moment(p.createdAt).fromNow()}</h6>
+                        <h3>Product name: {p.bookname}</h3>
+                        <h3>Product price: ${p.price}</h3>
+                        <h3>Purchased date: {moment(h.createdAt).fromNow()}</h3>
                       </div>
                     );
                   })}

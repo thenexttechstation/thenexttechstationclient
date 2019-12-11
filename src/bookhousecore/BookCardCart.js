@@ -6,7 +6,7 @@ import Chip from "@material-ui/core/Chip";
 import FaceIcon from "@material-ui/icons/Face";
 import DoneIcon from "@material-ui/icons/Done";
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+//import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
 import { green } from "@material-ui/core/colors";
 import { addItem, updateCart, removeProductFromCart } from "./Cart";
@@ -17,6 +17,9 @@ import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import { Grid, Segment } from "semantic-ui-react";
+import { Button, Icon, Message } from "semantic-ui-react";
+
 const BookCardCart = ({
   bookhouseproduct,
   showViewProductButton = true,
@@ -67,17 +70,14 @@ const BookCardCart = ({
     return (
       showRemoveProductButton && (
         <Button
-          fullWidth="true"
-          variant="contained"
-          color="secondary"
+          color="black"
+          size="massive"
           onClick={() => {
             removeProductFromCart(bookhouseproduct._id);
             setRun(!run);
           }}
-          className={classes.button}
-          startIcon={<DeleteIcon />}
         >
-          Delete
+          Delete Book from Cart
         </Button>
       )
     );
@@ -153,83 +153,56 @@ const BookCardCart = ({
   const showStock = quantity => {
     return quantity > 0 ? (
       <div className={classes.root}>
-        <FormControl component="fieldset">
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Switch
-                  edge="start"
-                  checked={state.instock}
-                  onChange={handleChange("instock")}
-                  value="instock"
-                  disabled="true"
-                  color="default"
-                  size="medium"
-                />
-              }
-              label="Book In Stock"
-            />
-          </FormGroup>
-        </FormControl>
-        <Chip
-          icon={<FaceIcon />}
-          label="Book in Stock"
-          onDelete={handleDelete}
-          color="primary"
-          size="medium"
-          fullwidth="true"
-          deleteIcon={<DoneIcon />}
-        />
+        <Message color="white" icon>
+          <Icon name="book" loading />
+          <Message.Content>
+            <Message.Header>{bookhouseproduct.bookname}</Message.Header>
+            In stock
+          </Message.Content>
+        </Message>
       </div>
     ) : (
       <div>
-        <Tooltip title={longText}>
-          <Button className={classes.button}>Book is Out of Stock</Button>
-        </Tooltip>
+        <Message
+          icon="announcement"
+          header="Sorry someone is reading this book right now"
+          content="Book is out of stock."
+        />
       </div>
     );
   };
   return (
     <div>
-      <div className="card">
-        {showRemoveButton(showRemoveProductButton)}
+      <Grid columns="equal" divided padded inverted>
+        <Grid.Row color="black" textAlign="center">
+          <Grid.Column>
+            <Segment color="yellow" inverted>
+              {showStock(bookhouseproduct.quantity)}
 
-        <div className="card-header name">
-          <h4>{bookhouseproduct.bookname}</h4>
-        </div>
-        <div className="card-body">
-          {shouldRedirect(redirect)}
-          <BookHouseImageCart item={bookhouseproduct} url="product" />
-          <p className="lead mt-2">
-            {bookhouseproduct.bookdescription.substring(0, 100)}
-          </p>
-          <p className="black-9">
-            <h3>Category: </h3>
-            {bookhouseproduct.bookhousecategory &&
-              bookhouseproduct.bookhousecategory.categoryname}
-          </p>
-          <p className="black-8">
-            <h3> Added on {moment(bookhouseproduct.createdAt).fromNow()}</h3>
-          </p>
-          <p className="black-10">
-            <h3>Author:</h3>
-            {bookhouseproduct.author}
-          </p>
-          <h3>Rs {bookhouseproduct.price}</h3>
+              <br></br>
+              {showRemoveButton(showRemoveProductButton)}
 
-          <br />
+              {shouldRedirect(redirect)}
+              <BookHouseImageCart item={bookhouseproduct} url="product" />
+              <br></br>
+              <h3>{bookhouseproduct.bookname}</h3>
 
-          {showStock(bookhouseproduct.quantity)}
-          <br />
-          {showViewButton(showViewProductButton)}
+              <h3>
+                {bookhouseproduct.bookhousecategory &&
+                  bookhouseproduct.bookhousecategory.categoryname}
+              </h3>
 
-          {showAddToCartButton(viewAddToCartButton)}
+              <h3>{bookhouseproduct.author}</h3>
+              <h3>Price: Rs {bookhouseproduct.price}</h3>
 
-          {showCartUpdate(cartUpdate)}
-        </div>
-      </div>
-      <br></br>
-      <br></br>
+              {showViewButton(showViewProductButton)}
+              {showAddToCartButton(viewAddToCartButton)}
+
+              {showCartUpdate(cartUpdate)}
+            </Segment>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     </div>
   );
 };

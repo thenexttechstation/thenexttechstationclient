@@ -10,6 +10,7 @@ import BookhouseLayout from "./BookhouseLayout";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import { Grid, Segment } from "semantic-ui-react";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -112,68 +113,89 @@ const SearchBookHouse = () => {
   const searchedProducts = (results = []) => {
     return (
       <div>
-        <h2 className="mt-4 mb-4">{searchMessage(searched, results)}</h2>
-        <div className="card">
-          {results.map((bookhouseproduct, i) => (
-            <BookCardSearch key={i} bookhouseproduct={bookhouseproduct} />
-          ))}
-        </div>
+        <Grid columns="equal" divided inverted padded>
+          <Grid.Row color="black" textAlign="center">
+            <Grid.Column>
+              <Segment color="black" inverted>
+                <h2>{searchMessage(searched, results)}</h2>
+                <div>
+                  {results.map((bookhouseproduct, i) => (
+                    <BookCardSearch
+                      key={i}
+                      bookhouseproduct={bookhouseproduct}
+                    />
+                  ))}
+                </div>
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </div>
     );
   };
 
   const searchForm = () => (
-    <form onSubmit={searchSubmit}>
-      <h3>
-        <label>Search Books</label>
-      </h3>
+    <div>
+      <Grid columns="equal" divided inverted padded>
+        <Grid.Row color="black" textAlign="center">
+          <Grid.Column>
+            <Segment color="black" inverted>
+              <form onSubmit={searchSubmit}>
+                <h3>
+                  <label>Search Books</label>
+                </h3>
 
-      {!searched && (
-        <div className={classes.root}>
-          <LinearProgress />
-          <LinearProgress color="secondary" />
-        </div>
-      )}
-      <br></br>
-      <span className="input-group-text">
-        <div className="input-group input-group-lg">
-          <div className="input-group-prepend">
-            <select
-              className="btn btn-warning btn-lg btn-block"
-              onChange={handleChange("bookhousecategory")}
-            >
-              <option value="All">Pick Category</option>
-              {bookhousecategories.map((c, i) => (
-                <option key={i} value={c._id}>
-                  {c.categoryname}
-                </option>
-              ))}
-            </select>
-          </div>
-          <br></br>
+                {!searched && (
+                  <div className={classes.root}>
+                    <LinearProgress />
+                    <LinearProgress color="secondary" />
+                  </div>
+                )}
+                <br></br>
+                <span className="input-group-text">
+                  <div className="input-group input-group-lg">
+                    <div className="input-group-prepend">
+                      <select
+                        className="btn btn-warning btn-lg btn-block"
+                        onChange={handleChange("bookhousecategory")}
+                      >
+                        <option value="All">Pick Category</option>
+                        {bookhousecategories.map((c, i) => (
+                          <option key={i} value={c._id}>
+                            {c.categoryname}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <br></br>
 
-          <input
-            type="search"
-            className="form-control"
-            onChange={handleChange("search")}
-            placeholder="Search by name"
-          />
+                    <input
+                      type="search"
+                      className="form-control"
+                      onChange={handleChange("search")}
+                      placeholder="Search by name"
+                    />
 
-          <input
-            type="search"
-            className="form-control"
-            onChange={handleChange("searchauthor")}
-            placeholder="Search by author"
-          />
+                    <input
+                      type="search"
+                      className="form-control"
+                      onChange={handleChange("searchauthor")}
+                      placeholder="Search by author"
+                    />
 
-          <br></br>
-          <br></br>
-          <button className="btn btn-info btn-lg btn-block">
-            <i>Search</i>
-          </button>
-        </div>
-      </span>
-    </form>
+                    <br></br>
+                    <br></br>
+                    <button className="btn btn-info btn-lg btn-block">
+                      <i>Search</i>
+                    </button>
+                  </div>
+                </span>
+              </form>
+            </Segment>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </div>
   );
 
   return (

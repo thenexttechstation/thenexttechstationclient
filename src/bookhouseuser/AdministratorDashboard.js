@@ -2,6 +2,7 @@ import React from "react";
 import BookHouseLayout from "../bookhousecore/BookhouseLayout";
 import { isAuthenticated } from "../bookhouseapi/Bookhouseuserapi";
 import { Link } from "react-router-dom";
+import { Button, Segment } from "semantic-ui-react";
 
 const AdministratorDashboard = () => {
   const {
@@ -15,22 +16,38 @@ const AdministratorDashboard = () => {
         <ul className="list-group">
           <li className="list-group-item">
             <Link className="nav-link" to="/category/create">
-              Create BookHouse category
+              <Segment inverted>
+                <Button color="yellow" inverted size="massive">
+                  Create Category
+                </Button>
+              </Segment>
             </Link>
           </li>
           <li className="list-group-item">
             <Link className="nav-link" to="/product/create">
-              Create Books
+              <Segment inverted>
+                <Button color="red" inverted size="massive">
+                  Create Books
+                </Button>
+              </Segment>
             </Link>
           </li>
           <li className="list-group-item">
             <Link className="nav-link" to="/admin/orders">
-              View Orders
+              <Segment inverted>
+                <Button color="green" inverted size="massive">
+                  View Orders
+                </Button>
+              </Segment>
             </Link>
           </li>
           <li className="list-group-item">
             <Link className="nav-link" to="/admin/manageproducts">
-              Manage Products
+              <Segment inverted>
+                <Button color="olive" inverted size="massive">
+                  Manage Products
+                </Button>
+              </Segment>{" "}
             </Link>
           </li>
         </ul>
@@ -41,16 +58,16 @@ const AdministratorDashboard = () => {
   const admininfo = () => {
     return (
       <div className="card mb-5">
-        <h3 className="card-header"> Book House User Information</h3>
+        <h3 className="card-header">Book House User Information</h3>
         <ul className="list-group">
           <li className="list-group-item">
-            <label>User Name: {username}</label>
+            <h3>User Name: {username}</h3>
           </li>
           <li className="list-group-item">
-            <label>Email: {email}</label>
+            <h3>Email: {email}</h3>
           </li>
           <li className="list-group-item">
-            <label>Role : {userrole === 1 ? "Admin" : "Customer"}</label>
+            <h3>Role : {userrole === 1 ? "Admin" : "Customer"}</h3>
           </li>
         </ul>
       </div>

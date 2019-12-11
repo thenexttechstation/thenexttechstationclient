@@ -136,6 +136,9 @@ export const createBookhouseOrder = (
   token,
   createOrderData
 ) => {
+  console.log(
+    "InsidecreateBookhouseOrder " + JSON.stringify({ order: createOrderData })
+  );
   return fetch(`${BOOKHOUSEAPI}/order/create/${bookhouseuserId}`, {
     method: "POST",
     headers: {

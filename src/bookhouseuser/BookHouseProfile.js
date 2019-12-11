@@ -3,6 +3,7 @@ import BookhouseLayout from "../bookhousecore/BookhouseLayout";
 import { isAuthenticated } from "../bookhouseapi/Bookhouseuserapi";
 import { Link, Redirect } from "react-router-dom";
 import { findProfileByUserId, update, updateUser } from "./Userapi";
+import { Button, Segment } from "semantic-ui-react";
 
 const Profile = ({ match }) => {
   const [values, setValues] = useState({
@@ -57,15 +58,14 @@ const Profile = ({ match }) => {
   const profileUpdate = (name, email, password) => (
     <form>
       <div className="form-group">
-        <label>Name</label>
+        <h3>Existing User name:{bookhouseuser.username}</h3>
+      </div>
+      <div className="form-group">
+        <h3>Name</h3>
         <input type="text" onChange={handleChange("username")} />
       </div>
       <div className="form-group">
-        <label>Existing User name</label>
-        <h3>{bookhouseuser.username}</h3>
-      </div>
-      <div className="form-group">
-        <label className="text-muted">Email</label>
+        <h3 className="text-muted">Email</h3>
         <input
           type="email"
           onChange={handleChange("email")}
@@ -74,7 +74,7 @@ const Profile = ({ match }) => {
         />
       </div>
       <div className="form-group">
-        <label className="text-muted">Password</label>
+        <h3 className="text-muted">Password</h3>
         <input
           type="password"
           onChange={handleChange("password")}
@@ -82,10 +82,11 @@ const Profile = ({ match }) => {
           value={password}
         />
       </div>
-
-      <button onClick={clickSubmit} className="btn btn-primary">
-        Submit
-      </button>
+      <Segment inverted>
+        <Button onClick={clickSubmit} color="yellow" inverted size="massive">
+          Submit
+        </Button>
+      </Segment>{" "}
     </form>
   );
   const handleChange = name => e => {

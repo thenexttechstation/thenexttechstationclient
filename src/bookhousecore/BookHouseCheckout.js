@@ -3,7 +3,7 @@ import BookHouseLayout from "./BookhouseLayout";
 import { emptyCart } from "./Cart";
 import ReactDOM from "react-dom";
 import RazorPay from "./RazorPay";
-
+import { QRCode } from "react-qr-svg";
 import {
   getProducts,
   getBraintreeClientToken,
@@ -18,10 +18,10 @@ import {
 import { Link } from "react-router-dom";
 import "braintree-web";
 import DropIn from "braintree-web-drop-in-react";
+import { Form, Message, Button, Segment } from "semantic-ui-react";
 
-const Checkout = ({ bookhouseproducts }) => {
+const BookHouseCheckout = ({ bookhouseproducts }) => {
   const { bookhouseuser, signedtoken } = isAuthenticated();
-
   const [data, setData] = useState({
     success: false,
     clientToken: null,
@@ -63,9 +63,15 @@ const Checkout = ({ bookhouseproducts }) => {
     return isAuthenticated() || isSocialAuthenticated() ? (
       <div>{showDropIn()}</div>
     ) : (
-      <Link to="/login">
-        <button className="btn btn-primary">Sign in </button>
-      </Link>
+      <div>
+        <Link to="/login">
+          <Segment inverted>
+            <Button inverted color="green" size="massive">
+              Authenticate to Book House
+            </Button>
+          </Segment>{" "}
+        </Link>
+      </div>
     );
   };
   const handledeliveryAddress = event => {
@@ -78,6 +84,21 @@ const Checkout = ({ bookhouseproducts }) => {
       {data.clientToken !== null && bookhouseproducts.length > 0 ? (
         <div>
           <div className="gorm-group mb-3">
+            <Form>
+              <Form.Field>
+                <h3>Delivery Address</h3>
+                <input
+                  onChange={handledeliveryAddress}
+                  value={data.address}
+                  placeholder="First Name"
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Last Name</label>
+                <input placeholder="Last Name" />
+              </Form.Field>
+            </Form>
+
             <label className="text-muted">Delivery address:</label>
             <textarea
               onChange={handledeliveryAddress}
@@ -88,26 +109,74 @@ const Checkout = ({ bookhouseproducts }) => {
           </div>
           <DropIn
             options={{
-              authorization: "data.clientToken",
+              authorization: data.clientToken,
               paypal: {
                 flow: "vault"
               }
             }}
             onInstance={instance => (data.instance = instance)}
           />
-          <button
-            onClick={makePayment}
-            className="btn btn-success btn-lg btn-block"
-          >
-            Make Payment
-          </button>
-          ReactDOM.render(
+          <div class="registration">
+            <form>
+              <label>Email</label>
+
+              <input type="text" />
+              <p class="error">
+                <span>This email exists already in the database</span>
+              </p>
+
+              <label>Password</label>
+              <input type="text" />
+              <p class="error">
+                <span>At least 8 characters</span>
+              </p>
+
+              <label>Password [repeat]</label>
+              <input type="text" />
+              <p class="error">
+                <span>Some text here</span>
+              </p>
+
+              <label>Year of Birth</label>
+              <input type="text" />
+              <p class="error">
+                <span>Some text here</span>
+              </p>
+
+              <label>Country</label>
+              <select name="country">
+                <option>Country 1</option>
+                <option>Country 2</option>
+              </select>
+
+              <div class="register_button">
+                <span>
+                  <a href="#">REGISTER</a>
+                </span>
+              </div>
+            </form>
+          </div>
+          <br></br>
+          <div>
+            <button
+              onClick={makePayment}
+              className="btn btn-success btn-lg btn-block"
+            >
+              Make Payment
+            </button>
+          </div>
           <RazorPay
             bookhouseuser={bookhouseuser}
             bookhouseproducts={bookhouseproducts}
             address={data.address}
           />
-          , document.getElementById("RazorPay"));
+          <QRCode
+            bgColor="#FFFFFF"
+            fgColor="#000000"
+            level="Q"
+            style={{ width: 256 }}
+            value="some text"
+          />
         </div>
       ) : null}
     </div>
@@ -174,7 +243,11 @@ const Checkout = ({ bookhouseproducts }) => {
       className="alert alert-danger"
       style={{ display: error ? "" : "none" }}
     >
-      {error}
+      <Message
+        icon="user secret"
+        header="Login or Register to avail the features"
+        content="Visit the registration/Login Page"
+      />
     </div>
   );
 
@@ -198,4 +271,4 @@ const Checkout = ({ bookhouseproducts }) => {
   );
 };
 
-export default Checkout;
+export default BookHouseCheckout;

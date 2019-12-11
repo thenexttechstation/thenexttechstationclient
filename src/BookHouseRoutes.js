@@ -22,6 +22,8 @@ import BookHouseProfile from "./bookhouseuser/BookHouseProfile";
 import BookHouseManageProducts from "./bookhouseadmin/BookHouseManageProducts";
 import ModifyProduct from "./bookhouseadmin/ModifyProduct";
 import SearchComponent from "./bookhousecore/SearchComponent";
+import EditorspickComponent from "./bookhousecore/EditorspickComponent";
+import CarousalComponent from "./bookhousecore/CarousalComponent";
 
 const Routes = () => {
   return (
@@ -75,6 +77,8 @@ const Routes = () => {
         />
         <Route path="/cart" exact component={BookHouseCart} />
         <Route path="/search" exact component={SearchComponent} />
+        <Route path="/editorspick" exact component={EditorspickComponent} />
+        <Route path="/catalog" exact component={CarousalComponent} />
 
         <Route path="*" component={BookHouseError} />
       </Switch>
