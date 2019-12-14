@@ -24,17 +24,16 @@ import ModifyProduct from "./bookhouseadmin/ModifyProduct";
 import SearchComponent from "./bookhousecore/SearchComponent";
 import EditorspickComponent from "./bookhousecore/EditorspickComponent";
 import CarousalComponent from "./bookhousecore/CarousalComponent";
+import MobileAuthComponent from "./bookhousecore/MobileAuthComponent";
 
 const Routes = () => {
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={Home} />
-
         <Route path="/login" exact component={Login} />
         <Route path="/sociallogin" exact component={SocialLogin} />
         <Route path="/bookshop" exact component={BookShop} />
-
         <Route path="/register" exact component={Register} />
         <PrivateRoute
           path="/bookhouseuser/dashboard"
@@ -51,7 +50,6 @@ const Routes = () => {
           exact
           component={BookhouseSocialUserDashboard}
         />
-
         <AdminRoute
           path="/admin/dashboard"
           exact
@@ -79,7 +77,8 @@ const Routes = () => {
         <Route path="/search" exact component={SearchComponent} />
         <Route path="/editorspick" exact component={EditorspickComponent} />
         <Route path="/catalog" exact component={CarousalComponent} />
-
+        <Route path="/mobileauth" exact component={MobileAuthComponent} />
+        mobileauth
         <Route path="*" component={BookHouseError} />
       </Switch>
     </BrowserRouter>

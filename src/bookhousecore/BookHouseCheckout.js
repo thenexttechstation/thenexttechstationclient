@@ -4,6 +4,7 @@ import { emptyCart } from "./Cart";
 import ReactDOM from "react-dom";
 import RazorPay from "./RazorPay";
 import { QRCode } from "react-qr-svg";
+import BookHouseAddressForm from "./BookHouseAddressForm";
 import {
   getProducts,
   getBraintreeClientToken,
@@ -18,7 +19,7 @@ import {
 import { Link } from "react-router-dom";
 import "braintree-web";
 import DropIn from "braintree-web-drop-in-react";
-import { Form, Message, Button, Segment } from "semantic-ui-react";
+import { Form, Message, Button, Segment, Input } from "semantic-ui-react";
 
 const BookHouseCheckout = ({ bookhouseproducts }) => {
   const { bookhouseuser, signedtoken } = isAuthenticated();
@@ -84,6 +85,7 @@ const BookHouseCheckout = ({ bookhouseproducts }) => {
       {data.clientToken !== null && bookhouseproducts.length > 0 ? (
         <div>
           <div className="gorm-group mb-3">
+            <BookHouseAddressForm />
             <Form>
               <Form.Field>
                 <h3>Delivery Address</h3>

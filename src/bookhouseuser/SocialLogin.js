@@ -263,7 +263,9 @@ const SocialLogin = props => {
         // ...
       });
   };
-
+  const shouldRedirect = () => {
+    props.history.push("/mobileauth");
+  };
   const redirectAfterLogin = () => {
     console.log("in redirect");
     props.history.push("/bookhousesocialuser/dashboard/");
@@ -336,6 +338,13 @@ const SocialLogin = props => {
             className="btn btn-white btn-lg btn-block"
           >
             Yahoo
+          </button>
+          <button
+            onClick={shouldRedirect}
+            type="button"
+            className="btn btn-primary btn-lg btn-block"
+          >
+            Mobile Authentication
           </button>
         </form>
         <a href="/register" className="login__forgot">

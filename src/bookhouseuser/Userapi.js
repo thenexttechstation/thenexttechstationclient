@@ -16,6 +16,7 @@ export const findProfileByUserId = (bookhouseuserId, token) => {
 };
 
 export const update = (bookhouseuserId, token, bookhouseuser) => {
+  console.log("inside update" + JSON.stringify(bookhouseuser));
   return fetch(`${BOOKHOUSEAPI}/bookhouseuser/update/${bookhouseuserId}`, {
     method: "PUT",
     headers: {

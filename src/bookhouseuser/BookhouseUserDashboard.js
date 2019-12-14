@@ -4,7 +4,7 @@ import { isAuthenticated } from "../bookhouseapi/Bookhouseuserapi";
 import { Link } from "react-router-dom";
 import { getBookPurchaseHistory } from "./Userapi";
 import moment from "moment";
-import { Button, Segment } from "semantic-ui-react";
+import { Button, Icon, Message, Segment, Image, Card } from "semantic-ui-react";
 
 const BookhouseUserDashboard = () => {
   const [history, setHistory] = useState([]);
@@ -32,7 +32,11 @@ const BookhouseUserDashboard = () => {
   const bookhouseuserlinks = () => {
     return (
       <div className="card">
-        <h3 className="card-header">Customer Links</h3>
+        <Segment inverted>
+          <Button inverted color="green" size="massive">
+            Customer Links
+          </Button>
+        </Segment>
         <ul className="list-group">
           <li className="list-group-item">
             <Link className="nav-link" to="/cart">
@@ -46,7 +50,7 @@ const BookhouseUserDashboard = () => {
           <li className="list-group-item">
             <Link className="nav-link" to={`/profile/${_id}`}>
               <Segment inverted>
-                <Button color="orange" inverted size="massive">
+                <Button color="teal" inverted size="massive">
                   Update Profile
                 </Button>
               </Segment>
@@ -60,7 +64,11 @@ const BookhouseUserDashboard = () => {
   const userinfo = () => {
     return (
       <div className="card mb-5">
-        <h3 className="card-header"> Book House User Information</h3>
+        <Segment inverted>
+          <Button inverted color="blue" size="massive">
+            Book House User Information
+          </Button>
+        </Segment>
         <ul className="list-group">
           <li className="list-group-item">
             <h3>User Name: {username}</h3>
@@ -89,7 +97,11 @@ const BookhouseUserDashboard = () => {
   const purchaseBookHistory = history => {
     return (
       <div className="card mb-5">
-        <h3 className="card-header">Purchase history</h3>
+        <Segment inverted>
+          <Button inverted color="green" size="massive">
+            Purchase History
+          </Button>
+        </Segment>{" "}
         <ul className="list-group">
           <li className="list-group-item">
             {history.map((h, i) => {
@@ -99,10 +111,59 @@ const BookhouseUserDashboard = () => {
                   {h.bookhouseproducts.map((p, i) => {
                     return (
                       <div key={i}>
-                        {JSON.stringify(p)}
+                        <Segment inverted>
+                          <Button inverted color="blue" size="massive">
+                            Order Transaction Id :{h._id}
+                          </Button>
+                        </Segment>
+                        <Card>
+                          <Card.Content header="Order Transaction" />
+                          <Card.Content extra>
+                            <Icon name="payment" />
+                            Payment Id:{h.transaction_id}
+                          </Card.Content>
+                          <Card.Content extra>
+                            <Icon name="money" />
+                            Order Amount:{h.amount}
+                          </Card.Content>
+                          <Card.Content extra>
+                            <Icon name="wait" />
+                            Order Status:{h.status}
+                          </Card.Content>
+                        </Card>
+                        <Segment inverted>
+                          <Button inverted color="red" size="massive">
+                            Product Details
+                          </Button>
+                        </Segment>
+
+                        <Card>
+                          <Image src={p.imageurl} wrapped ui={false} />
+                          <Card.Content>
+                            <Card.Header>
+                              <h3>{p.bookname}</h3>
+                            </Card.Header>
+                            <Card.Meta>
+                              <br></br>
+                              <h5>
+                                Purchased date: {moment(h.createdAt).fromNow()}
+                              </h5>
+                              <h5>Quantity : {p.count}</h5>
+                            </Card.Meta>
+                            <Card.Description>
+                              <h5>Author:{p.author}</h5>
+                            </Card.Description>
+                          </Card.Content>
+                          <Card.Content extra>
+                            <Icon name="money" />
+                            <h5>Product price: Rs {p.price}</h5>
+                          </Card.Content>
+                        </Card>
+                        {/* {JSON.stringify(p)}
+                        <Image src={p.imageurl} wrapped ui={false} />
                         <h3>Product name: {p.bookname}</h3>
-                        <h3>Product price: ${p.price}</h3>
-                        <h3>Purchased date: {moment(h.createdAt).fromNow()}</h3>
+                        <h3>Product price: Rs {p.price}</h3>
+                        <h3>Purchased date: {moment(h.createdAt).fromNow()}</h3> */}
                       </div>
                     );
                   })}

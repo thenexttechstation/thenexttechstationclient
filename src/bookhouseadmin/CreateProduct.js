@@ -84,7 +84,7 @@ const AddProduct = () => {
     });
 
     addProducts(bookhouseuser._id, signedtoken, formData).then(data => {
-      console.log("hello" + JSON.stringify(data.data.bookname));
+      //console.log("hello" + JSON.stringify(data.data.bookname));
       if (data.data.error) {
         setValues({ ...values, error: data.data.error });
       } else {

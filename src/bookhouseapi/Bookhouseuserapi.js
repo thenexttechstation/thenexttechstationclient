@@ -35,6 +35,7 @@ export const registerUser = bookhouseuser => {
 };
 
 export const loginUser = bookhouseuser => {
+  console.log("Inside LoginUser");
   return fetch(`${BOOKHOUSEAPI}/login`, {
     method: "POST",
     headers: {

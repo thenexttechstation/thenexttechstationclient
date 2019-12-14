@@ -23,13 +23,12 @@ const Register = () => {
   const callRegisterationAPI = event => {
     event.preventDefault();
     setValues({ ...values, error: false });
-
-    ({
+    registerUser({
       username: username,
       email: email,
       password: password,
       provider: "bookhouse"
-    }.then(registrationdata => {
+    }).then(registrationdata => {
       if (registrationdata.error) {
         setValues({
           ...values,
@@ -46,7 +45,7 @@ const Register = () => {
           error: ""
         });
       }
-    }));
+    });
   };
 
   const registrationNewForm = () => (
